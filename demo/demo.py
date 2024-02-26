@@ -4,9 +4,15 @@ import glob
 import multiprocessing as mp
 import os
 import time
-import cv2
+import cv2 # OpenCV is optional and needed by demo and visualization
+# For cv2 with python=3.6 we need deprecated opencv version: opencv_contrib_python-3.2.0.7-cp36-cp36m-win_amd64.whl
 import tqdm
 
+# To run demo with CPU: python demo.py --config-file ../configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml --input ./dog_bike_car.jpg --opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl MODEL.DEVICE cpu
+
+# get v0.3 of detectron2
+# To get v0.3 which is compatible with python 3.6, run: 
+# python -m pip install git+https://github.com/facebookresearch/detectron2.git@v0.3
 from detectron2.config import get_cfg
 from detectron2.data.detection_utils import read_image
 from detectron2.utils.logger import setup_logger
@@ -76,7 +82,6 @@ if __name__ == "__main__":
     setup_logger(name="fvcore")
     logger = setup_logger()
     logger.info("Arguments: " + str(args))
-
     cfg = setup_cfg(args)
 
     demo = VisualizationDemo(cfg)
